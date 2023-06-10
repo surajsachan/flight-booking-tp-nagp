@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "f95e2d15-652b-4843-81bb-c786dcf383e9",
+		"name": "FlightBooking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search Flights",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Authenticated-User",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbXSwic3ViIjoic3VyYWoiLCJpYXQiOjE2Nzk2MzcyNjAsImV4cCI6MTY3OTY2NjA2MH0.I_PO4xKXi0q9dx8eH8A0WPSZ1o-wN7jx_Wq3wCjpkcxENbKJtNjP3lcZRFhDm_gDnNwgnmwHr9tCDbVSekjkNg",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"flightClass\": \"Both\",\n    \"arrivalLocation\": \"GOA\",\n    \"departureLocation\": \"NEW DELHI\",\n    \"departureDate\": \"2023-03-30\",\n    \"returnDate\": \"2023-03-30\",\n    \"searchType\": \"RoundTrip\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/search/flights",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"search",
+						"flights"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Inventory",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"flightId\": \"01E\",\n    \"numOfPassengers\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/search/updateInventory",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"search",
+						"updateInventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Flight Availability",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"listOfFlightId\": [\"02E\", \"02B\"],\n    \"numOfPassengers\": [\"2\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/search/checkAvailability",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"search",
+						"checkAvailability"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Flight Details",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/search/flightInfo?flightId=01B",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"search",
+						"flightInfo"
+					],
+					"query": [
+						{
+							"key": "flightId",
+							"value": "01B"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set('bookingID',pm.response.json().bookingId);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": \"suraj_sachan\",\n    \"flightBookingInfo\":[{\n        \"customerInfo\":[{\n            \"custName\": \"abc\",\n            \"custAddress\": \"xyz\",\n            \"custContactNumber\": \"9870221585\"\n        }],\n        \"flightId\": \"01B\"\n    },\n    {\n        \"customerInfo\":[{\n            \"custName\": \"abc\",\n            \"custAddress\": \"xyz\",\n            \"custContactNumber\": \"9870221585\"\n        }],\n        \"flightId\": \"02E\"\n    }],\n    \"paymentDetails\": {\n        \"cardNumber\": \"1234567890123456\",\n        \"cvv\": \"123\"\n    }\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/booking/createFlightBooking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"booking",
+						"createFlightBooking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Booking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/booking/cancelFlightBooking?bookingId={{bookingID}}",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"booking",
+						"cancelFlightBooking"
+					],
+					"query": [
+						{
+							"key": "bookingId",
+							"value": "{{bookingID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "bookingID",
+			"value": ""
+		}
+	]
+}
